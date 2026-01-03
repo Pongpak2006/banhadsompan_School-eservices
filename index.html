@@ -1,0 +1,1425 @@
+<!doctype html>
+<html lang="th" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>โรงเรียนบ้านหาดส้มแป้น - Banhadsompan School</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+      font-family: 'Sarabun', sans-serif;
+    }
+    
+    .nav-link {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: var(--primary-color);
+      transition: width 0.3s ease;
+      border-radius: 3px;
+    }
+    
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+    
+    .hero-overlay {
+      background: var(--primary-gradient);
+    }
+    
+    .service-card {
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+    
+    .service-card:hover {
+      transform: translateY(-8px) scale(1.02);
+    }
+    
+    .service-card:hover::before {
+      left: 100%;
+    }
+    
+    .image-preview {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+    
+    .logo-preview {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .fade-in-up {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+
+    .scroll-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .modal-backdrop {
+      backdrop-filter: blur(10px);
+      background: rgba(0, 0, 0, 0.6);
+    }
+    
+    .admin-input, .admin-textarea {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      font-family: 'Sarabun', sans-serif;
+    }
+    
+    .admin-input:focus, .admin-textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 4px var(--primary-color-light);
+    }
+    
+    .admin-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+    
+    .file-input-label {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--primary-gradient);
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+    
+    .file-input-label:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px var(--primary-shadow);
+    }
+    
+    .btn-primary {
+      background: var(--primary-gradient);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px var(--primary-shadow);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    
+    .section-title {
+      position: relative;
+      display: inline-block;
+      padding-bottom: 12px;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: var(--primary-gradient);
+      border-radius: 2px;
+    }
+
+    .about-box {
+      border: 3px solid var(--primary-color);
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      transition: all 0.4s ease;
+    }
+
+    .about-box:hover {
+      transform: scale(1.02);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: start;
+      gap: 16px;
+      padding: 24px;
+      background: linear-gradient(to right, var(--primary-light), white);
+      border-radius: 16px;
+      border: 2px solid var(--primary-light);
+      transition: all 0.3s ease;
+    }
+
+    .contact-info-item:hover {
+      transform: translateX(8px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    }
+
+    .map-container {
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      height: 100%;
+      position: relative;
+      background: white;
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .map-fallback {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      text-align: center;
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    }
+
+    .map-fallback svg {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 20px;
+      opacity: 0.6;
+    }
+
+    .map-fallback-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--primary-gradient);
+      color: white;
+      text-decoration: none;
+      font-weight: 700;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      font-size: 16px;
+    }
+
+    .map-fallback-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px var(--primary-shadow);
+    }
+
+    .feature-icon-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      border-radius: 20px;
+      background: var(--primary-gradient);
+      margin: 0 auto 16px;
+      transition: all 0.3s ease;
+    }
+
+    .feature-icon-box:hover {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .home-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .home-link:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .social-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      transition: all 0.3s ease;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .social-icon:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-4px) scale(1.1);
+    }
+
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .logo-preview {
+        max-width: 48px;
+        max-height: 48px;
+      }
+      
+      .nav-link {
+        font-size: 14px;
+      }
+      
+      .hero-overlay {
+        padding: 40px 20px;
+      }
+      
+      .section-title {
+        font-size: 32px !important;
+      }
+
+      .social-icon {
+        width: 48px;
+        height: 48px;
+      }
+
+      .contact-info-item {
+        padding: 16px;
+      }
+    }
+
+    :root {
+      --primary-color: #7f0101;
+      --primary-dark: #5a0000;
+      --primary-light: #ffe5e5;
+      --primary-gradient: linear-gradient(135deg, #9f0101 0%, #7f0101 100%);
+      --primary-shadow: rgba(127, 1, 1, 0.3);
+      --secondary-color: #1e293b;
+      --text-color: #1f2937;
+      --bg-color: #f8fafc;
+      --accent-color: #10b981;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full w-full overflow-auto" style="background-color: var(--bg-color);"><!-- Top Bar -->
+  <div style="background: #7f0101; color: white; padding: 8px 0;">
+   <div class="container mx-auto max-w-7xl px-4 sm:px-6">
+    <div class="flex flex-wrap justify-between items-center text-xs sm:text-sm gap-2">
+     <div class="flex flex-wrap items-center gap-2 sm:gap-4"><!-- Home Link --> <a href="https://www.banhadsompan.ac.th" target="_blank" rel="noopener noreferrer" class="home-link text-xs">
+       <svg class="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+       </svg><span class="hidden sm:inline">หน้าหลัก</span> </a>
+      <div class="flex items-center gap-1 sm:gap-2">
+       <svg class="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /> <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+       </svg><span id="top-email" class="text-xs truncate max-w-[120px] sm:max-w-none">school@banhadsompan.ac.th</span>
+      </div>
+      <div class="flex items-center gap-1 sm:gap-2">
+       <svg class="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" fill="currentColor" viewbox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+       </svg><span id="top-phone" class="text-xs">098-048-3906</span>
+      </div>
+     </div><button id="admin-btn" class="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 bg-white bg-opacity-10 hover:bg-opacity-20 rounded-lg transition-all duration-300 text-xs flex-shrink-0">
+      <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd" />
+      </svg><span class="hidden sm:inline">ผู้ดูแล</span> </button>
+    </div>
+   </div>
+  </div><!-- Main Navigation -->
+  <nav class="bg-white shadow-lg sticky top-0 z-40">
+   <div class="container mx-auto max-w-7xl px-4 sm:px-6 py-3 sm:py-4">
+    <div class="flex justify-between items-center">
+     <div class="flex items-center gap-2 sm:gap-4">
+      <div id="logo-container" class="w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center overflow-hidden flex-shrink-0"><img id="logo-img" class="hidden logo-preview" alt="Logo">
+       <svg id="logo-default" class="w-12 h-12 sm:w-16 sm:h-16" fill="var(--primary-color)" viewbox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z" />
+       </svg>
+      </div>
+      <div>
+       <h1 id="nav-school-name" class="text-base sm:text-2xl font-bold leading-tight" style="color: var(--secondary-color);">โรงเรียนบ้านหาดส้มแป้น</h1>
+       <p id="nav-school-name-en" class="text-xs sm:text-sm font-medium" style="color: var(--text-color); opacity: 0.7;">Ban Had Som Paen School</p>
+      </div>
+     </div>
+     <div class="hidden md:flex items-center gap-6 lg:gap-8"><a href="#home" class="nav-link active font-semibold text-base lg:text-lg" style="color: var(--text-color);">หน้าแรก</a> <a href="#services" class="nav-link font-semibold text-base lg:text-lg" style="color: var(--text-color);">E-Services</a> <a href="#about" class="nav-link font-semibold text-base lg:text-lg" style="color: var(--text-color);">เกี่ยวกับ</a> <a href="#contact" class="nav-link font-semibold text-base lg:text-lg" style="color: var(--text-color);">ติดต่อ</a>
+     </div><!-- Mobile Menu Button --> <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg></button>
+    </div><!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden mt-4 pb-2 space-y-2"><a href="#home" class="block px-4 py-2 rounded-lg hover:bg-gray-100 font-semibold" style="color: var(--text-color);">หน้าแรก</a> <a href="#services" class="block px-4 py-2 rounded-lg hover:bg-gray-100 font-semibold" style="color: var(--text-color);">E-Services</a> <a href="#about" class="block px-4 py-2 rounded-lg hover:bg-gray-100 font-semibold" style="color: var(--text-color);">เกี่ยวกับ</a> <a href="#contact" class="block px-4 py-2 rounded-lg hover:bg-gray-100 font-semibold" style="color: var(--text-color);">ติดต่อ</a>
+    </div>
+   </div>
+  </nav><!-- Hero Section -->
+  <section id="home" class="relative py-12 sm:py-16 lg:py-20 px-4 sm:px-6 overflow-hidden">
+   <div id="hero-bg" class="absolute inset-0 bg-cover bg-center">
+    <div class="hero-overlay absolute inset-0"></div>
+    <div id="hero-default-bg" style="background: var(--primary-gradient); position: absolute; inset: 0;"></div>
+   </div>
+   <div class="container mx-auto max-w-7xl relative z-10">
+    <div class="text-center text-white fade-in-up">
+     <div class="inline-block mb-3 sm:mb-4 px-4 sm:px-6 py-2 bg-white bg-opacity-20 backdrop-blur-sm rounded-full"><span class="text-sm sm:text-lg font-bold">🏫 ยินดีต้อนรับสู่</span>
+     </div>
+     <h1 id="hero-title" class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-3 sm:mb-4 leading-tight drop-shadow-2xl px-4">โรงเรียนบ้านหาดส้มแป้น</h1>
+     <p id="hero-subtitle" class="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold mb-6 sm:mb-8 max-w-3xl mx-auto leading-relaxed drop-shadow-lg px-4">พัฒนาคุณภาพการศึกษา สร้างอนาคตที่ยั่งยืน</p>
+     <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4"><a href="#services" class="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-white text-base sm:text-lg font-bold rounded-xl shadow-2xl hover:shadow-3xl transform hover:scale-105 transition-all duration-300" style="color: var(--primary-color);">
+       <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd" />
+       </svg> ศูนย์บริการ E-Services </a> <a href="#about" class="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 bg-transparent border-2 border-white text-white text-base sm:text-lg font-bold rounded-xl hover:bg-white transition-all duration-300 hover:text-red-800">
+       <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+       </svg> เกี่ยวกับเรา </a>
+     </div>
+    </div>
+   </div>
+  </section><!-- E-Services Section -->
+  <section id="services" class="py-12 sm:py-16 lg:py-20 px-4 sm:px-6" style="background-color: white;">
+   <div class="container mx-auto max-w-7xl">
+    <div class="text-center mb-10 sm:mb-16"><span class="inline-block px-4 sm:px-6 py-2 rounded-full font-bold text-sm sm:text-base mb-3 sm:mb-4" style="background-color: var(--primary-light); color: var(--primary-color);">E-Services Center</span>
+     <h2 class="section-title text-3xl sm:text-4xl md:text-5xl font-black mb-3 sm:mb-4" style="color: var(--secondary-color);">ศูนย์บริการอิเล็กทรอนิกส์</h2>
+     <p class="text-base sm:text-lg lg:text-xl font-medium px-4" style="color: var(--text-color); opacity: 0.7;">เลือกบริการที่ต้องการได้ทันที รวดเร็ว ปลอดภัย</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8"><!-- Service 1 -->
+     <div class="service-card bg-white rounded-2xl overflow-hidden border border-gray-100" style="box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+      <div id="service1-img-container" class="relative h-40 sm:h-48 overflow-hidden" style="background: linear-gradient(135deg, var(--primary-light) 0%, #ffd5d5 100%);"><img id="service1-img" class="hidden w-full h-full object-cover" alt="Service 1">
+       <svg id="service1-default" class="absolute inset-0 w-full h-full p-8" viewbox="0 0 200 200" fill="none"><circle cx="100" cy="70" r="35" fill="var(--primary-color)" opacity="0.3" /> <circle cx="100" cy="70" r="28" fill="var(--primary-color)" /> <rect x="78" y="105" width="44" height="60" rx="8" fill="var(--primary-color)" opacity="0.85" /> <rect x="58" y="120" width="22" height="45" rx="8" fill="var(--primary-color)" opacity="0.65" /> <rect x="120" y="120" width="22" height="45" rx="8" fill="var(--primary-color)" opacity="0.65" />
+       </svg>
+      </div>
+      <div class="p-5 sm:p-6">
+       <div class="flex items-center gap-3 mb-3 sm:mb-4">
+        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background: var(--primary-gradient);">
+         <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="white" viewbox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
+         </svg>
+        </div>
+        <h3 id="service1-title" class="text-lg sm:text-xl lg:text-2xl font-black" style="color: var(--secondary-color);">สำหรับครู</h3>
+       </div>
+       <p id="service1-desc" class="text-sm sm:text-base mb-4 leading-relaxed font-medium" style="color: var(--text-color); opacity: 0.7;">งานเอกสาร งานวิชาการ ระบบสารสนเทศ และบริการสนับสนุนการเรียนการสอน</p><a id="service1-link" href="https://www.banhadsompan.ac.th/datashow_11181" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm sm:text-base font-bold hover:gap-4 transition-all duration-300" style="color: var(--primary-color);"> เข้าสู่บริการ 
+        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg></a>
+      </div>
+     </div><!-- Service 2 -->
+     <div class="service-card bg-white rounded-2xl overflow-hidden border border-gray-100" style="box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+      <div id="service2-img-container" class="relative h-40 sm:h-48 overflow-hidden" style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);"><img id="service2-img" class="hidden w-full h-full object-cover" alt="Service 2">
+       <svg id="service2-default" class="absolute inset-0 w-full h-full p-8" viewbox="0 0 200 200" fill="none"><circle cx="100" cy="65" r="32" fill="var(--primary-color)" opacity="0.35" /> <circle cx="100" cy="65" r="26" fill="var(--primary-color)" /> <rect x="78" y="97" width="44" height="60" rx="8" fill="var(--primary-color)" opacity="0.85" /> <rect x="58" y="112" width="22" height="45" rx="8" fill="var(--primary-color)" opacity="0.65" /> <rect x="120" y="112" width="22" height="45" rx="8" fill="var(--primary-color)" opacity="0.65" />
+       </svg>
+      </div>
+      <div class="p-5 sm:p-6">
+       <div class="flex items-center gap-3 mb-3 sm:mb-4">
+        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background: var(--primary-gradient);">
+         <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="white" viewbox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
+         </svg>
+        </div>
+        <h3 id="service2-title" class="text-lg sm:text-xl lg:text-2xl font-black" style="color: var(--secondary-color);">สำหรับนักเรียน</h3>
+       </div>
+       <p id="service2-desc" class="text-sm sm:text-base mb-4 leading-relaxed font-medium" style="color: var(--text-color); opacity: 0.7;">ข้อมูลนักเรียน ผลการเรียน ตารางเรียน กิจกรรม และบริการเรียนรู้ออนไลน์</p><a id="service2-link" href="https://www.banhadsompan.ac.th/datashow_11182" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm sm:text-base font-bold hover:gap-4 transition-all duration-300" style="color: var(--primary-color);"> เข้าสู่บริการ 
+        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg></a>
+      </div>
+     </div><!-- Service 3 -->
+     <div class="service-card bg-white rounded-2xl overflow-hidden border border-gray-100" style="box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+      <div id="service3-img-container" class="relative h-40 sm:h-48 overflow-hidden" style="background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);"><img id="service3-img" class="hidden w-full h-full object-cover" alt="Service 3">
+       <svg id="service3-default" class="absolute inset-0 w-full h-full p-8" viewbox="0 0 200 200" fill="none"><circle cx="75" cy="65" r="26" fill="var(--primary-color)" opacity="0.4" /> <rect x="60" y="91" width="30" height="48" rx="6" fill="var(--primary-color)" opacity="0.6" /> <circle cx="125" cy="70" r="28" fill="var(--primary-color)" opacity="0.5" /> <rect x="108" y="98" width="34" height="52" rx="6" fill="var(--primary-color)" opacity="0.7" /> <circle cx="100" cy="50" r="30" fill="var(--primary-color)" /> <rect x="78" y="80" width="44" height="60" rx="8" fill="var(--primary-color)" opacity="0.9" />
+       </svg>
+      </div>
+      <div class="p-5 sm:p-6">
+       <div class="flex items-center gap-3 mb-3 sm:mb-4">
+        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center flex-shrink-0" style="background: var(--primary-gradient);">
+         <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="white" viewbox="0 0 20 20"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" />
+         </svg>
+        </div>
+        <h3 id="service3-title" class="text-lg sm:text-xl lg:text-2xl font-black" style="color: var(--secondary-color);">บริการทั่วไป</h3>
+       </div>
+       <p id="service3-desc" class="text-sm sm:text-base mb-4 leading-relaxed font-medium" style="color: var(--text-color); opacity: 0.7;">บริการประชาชน ผู้ปกครอง ข้อมูลโรงเรียน และช่องทางติดต่อสื่อสาร</p><a id="service3-link" href="https://www.banhadsompan.ac.th/datashow_11183" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-sm sm:text-base font-bold hover:gap-4 transition-all duration-300" style="color: var(--primary-color);"> เข้าสู่บริการ 
+        <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+        </svg></a>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- About Section -->
+  <section id="about" class="py-12 sm:py-16 lg:py-20 px-4 sm:px-6" style="background: linear-gradient(to bottom, white 0%, var(--bg-color) 100%);">
+   <div class="container mx-auto max-w-7xl">
+    <div class="text-center mb-10 sm:mb-16"><span class="inline-block px-4 sm:px-6 py-2 rounded-full font-bold text-sm sm:text-base mb-3 sm:mb-4" style="background-color: var(--primary-light); color: var(--primary-color);">About Us</span>
+     <h2 class="section-title text-3xl sm:text-4xl md:text-5xl font-black mb-3 sm:mb-4" style="color: var(--secondary-color);">เกี่ยวกับโรงเรียน</h2>
+     <p class="text-base sm:text-lg lg:text-xl font-medium px-4" style="color: var(--text-color); opacity: 0.7;">พัฒนาคุณภาพ สร้างอนาคต</p>
+    </div>
+    <div class="max-w-5xl mx-auto">
+     <div class="about-box scroll-reveal">
+      <div class="flex items-center justify-center mb-6">
+       <div class="w-16 h-16 rounded-full flex items-center justify-center" style="background: var(--primary-gradient);">
+        <svg class="w-8 h-8" fill="white" viewbox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z" />
+        </svg>
+       </div>
+      </div>
+      <h3 class="text-2xl sm:text-3xl md:text-4xl font-black mb-4 text-center" style="color: var(--secondary-color);">โรงเรียนบ้านหาดส้มแป้น</h3>
+      <p id="about-content" class="text-base sm:text-lg leading-relaxed text-center font-medium mb-8" style="color: var(--text-color);">โรงเรียนของเราได้จัดตั้งศูนย์บริการอิเล็กทรอนิกส์ เพื่อพัฒนาการให้บริการข้อมูลและงานบริการต่าง ๆ แก่ครู นักเรียน ผู้ปกครอง และประชาชนทั่วไป ด้วยระบบดิจิทัลที่ทันสมัย เรามุ่งมั่นพัฒนาคุณภาพการศึกษา ด้วยเทคโนโลยีที่ทันสมัย ระบบที่โปร่งใส และตรวจสอบได้ สอดคล้องกับมาตรฐานการประเมินคุณธรรมและความโปร่งใส (ITA) ในยุคดิจิทัล</p>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+       <div class="text-center">
+        <div class="feature-icon-box">
+         <svg class="w-10 h-10" fill="white" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg>
+        </div>
+        <h4 class="font-bold text-base mb-1" style="color: var(--secondary-color);">บริการครบวงจร</h4>
+        <p class="text-xs" style="color: var(--text-color); opacity: 0.6;">ครอบคลุมทุกความต้องการ</p>
+       </div>
+       <div class="text-center">
+        <div class="feature-icon-box">
+         <svg class="w-10 h-10" fill="white" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg>
+        </div>
+        <h4 class="font-bold text-base mb-1" style="color: var(--secondary-color);">ระบบปลอดภัย</h4>
+        <p class="text-xs" style="color: var(--text-color); opacity: 0.6;">มาตรฐานสากล</p>
+       </div>
+       <div class="text-center">
+        <div class="feature-icon-box">
+         <svg class="w-10 h-10" fill="white" viewbox="0 0 20 20"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /> <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm9.707 5.707a1 1 0 00-1.414-1.414L9 12.586l-1.293-1.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg>
+        </div>
+        <h4 class="font-bold text-base mb-1" style="color: var(--secondary-color);">ตรวจสอบได้</h4>
+        <p class="text-xs" style="color: var(--text-color); opacity: 0.6;">โปร่งใส มีมาตรฐาน</p>
+       </div>
+       <div class="text-center">
+        <div class="feature-icon-box">
+         <svg class="w-10 h-10" fill="white" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+         </svg>
+        </div>
+        <h4 class="font-bold text-base mb-1" style="color: var(--secondary-color);">มาตรฐาน ITA</h4>
+        <p class="text-xs" style="color: var(--text-color); opacity: 0.6;">การประเมินคุณธรรม</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Contact Section -->
+  <section id="contact" class="py-12 sm:py-16 lg:py-20 px-4 sm:px-6" style="background-color: white;">
+   <div class="container mx-auto max-w-7xl">
+    <div class="text-center mb-10 sm:mb-16"><span class="inline-block px-4 sm:px-6 py-2 rounded-full font-bold text-sm sm:text-base mb-3 sm:mb-4" style="background-color: var(--primary-light); color: var(--primary-color);">Contact Us</span>
+     <h2 class="section-title text-3xl sm:text-4xl md:text-5xl font-black mb-3 sm:mb-4" style="color: var(--secondary-color);">ติดต่อเรา</h2>
+     <p class="text-base sm:text-lg lg:text-xl font-medium px-4" style="color: var(--text-color); opacity: 0.7;">พร้อมให้บริการและตอบคำถาม</p>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 max-w-6xl mx-auto"><!-- Left: Map -->
+     <div class="scroll-reveal order-2 lg:order-1" style="min-height: 450px;">
+      <div class="map-container h-full"><iframe id="google-map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3933.8895519834807!2d99.17961207590679!3d9.631836590456678!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x305289e89eb5d1d3%3A0x40223bc2c382d60!2z4LmC4Lij4LiH4LmA4Lij4Li14Lii4LiZ4Lia4LmJ4Liy4LiZ4Lir4Liy4LiU4Liq4LmJ4Lih4LmB4Lib4LmJ4LiZ!5e0!3m2!1sth!2sth!4v1705234567890!5m2!1sth!2sth" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="display: block;"> </iframe>
+       <div class="map-fallback">
+        <svg fill="var(--primary-color)" viewbox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+        </svg>
+        <h3 class="text-xl sm:text-2xl font-black mb-3" style="color: var(--secondary-color);">แผนที่โรงเรียน</h3>
+        <p class="text-sm sm:text-base mb-4 leading-relaxed" style="color: var(--text-color); opacity: 0.8;">333 หมู่ที่ 11 ต.ท่าข้าม<br>
+         อ.ท่าแซะ จ.ชุมพร 86140</p><a href="https://maps.app.goo.gl/STGfaGVP8ja8xBMG6" target="_blank" rel="noopener noreferrer" class="map-fallback-btn">
+         <svg class="w-5 h-5" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+         </svg> เปิดใน Google Maps </a>
+       </div>
+      </div>
+     </div><!-- Right: Contact Info -->
+     <div class="scroll-reveal order-1 lg:order-2 flex flex-col justify-center">
+      <div class="space-y-4 sm:space-y-5">
+       <div class="contact-info-item">
+        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center flex-shrink-0" style="background: var(--primary-gradient);">
+         <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="white" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+         </svg>
+        </div>
+        <div>
+         <h3 class="text-lg sm:text-xl font-black mb-2" style="color: var(--secondary-color);">ที่อยู่</h3>
+         <p id="contact-address" class="text-sm sm:text-base leading-relaxed" style="color: var(--text-color); opacity: 0.8;">333 หมู่ที่ 11 ตำบลท่าข้าม อำเภอท่าแซะ จังหวัดชุมพร 86140</p>
+        </div>
+       </div>
+       <div class="contact-info-item">
+        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center flex-shrink-0" style="background: var(--primary-gradient);">
+         <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="white" viewbox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+         </svg>
+        </div>
+        <div>
+         <h3 class="text-lg sm:text-xl font-black mb-2" style="color: var(--secondary-color);">โทรศัพท์</h3>
+         <p id="contact-phone" class="text-lg sm:text-xl font-bold" style="color: var(--primary-color);">098-048-3906</p>
+         <p class="text-xs sm:text-sm mt-1 font-semibold" style="color: var(--text-color); opacity: 0.7;">จันทร์-ศุกร์ 08:30-16:30 น.</p>
+        </div>
+       </div>
+       <div class="contact-info-item">
+        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center flex-shrink-0" style="background: var(--primary-gradient);">
+         <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="white" viewbox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /> <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+         </svg>
+        </div>
+        <div>
+         <h3 class="text-lg sm:text-xl font-black mb-2" style="color: var(--secondary-color);">อีเมล</h3>
+         <p id="contact-email" class="text-sm sm:text-base font-semibold break-all" style="color: var(--primary-color);">school@banhadsompan.ac.th</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Footer -->
+  <footer class="py-10 sm:py-12 px-4 sm:px-6" style="background: #7f0101; color: white;">
+   <div class="container mx-auto max-w-7xl">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+     <div>
+      <div class="flex items-center gap-3 mb-4">
+       <div id="footer-logo-container" class="w-12 h-12 rounded-xl flex items-center justify-center overflow-hidden flex-shrink-0" style="background: rgba(255,255,255,0.2);"><img id="footer-logo-img" class="hidden w-full h-full object-contain p-1" alt="Logo">
+        <svg id="footer-logo-default" class="w-7 h-7" fill="white" viewbox="0 0 24 24"><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z" />
+        </svg>
+       </div>
+       <div>
+        <h3 id="footer-school-name" class="text-base sm:text-lg font-bold">โรงเรียนบ้านหาดส้มแป้น</h3>
+       </div>
+      </div>
+      <p class="text-gray-200 leading-relaxed text-sm sm:text-base">พัฒนาคุณภาพการศึกษา สร้างอนาคตที่ยั่งยืน ด้วยเทคโนโลยีและนวัตกรรม</p>
+     </div>
+     <div>
+      <h4 class="text-base sm:text-lg font-bold mb-4">ลิงก์ด่วน</h4>
+      <ul class="space-y-2 text-gray-200 text-sm sm:text-base">
+       <li><a href="#home" class="hover:text-white transition-colors inline-flex items-center gap-2">
+         <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+         </svg> หน้าแรก </a></li>
+       <li><a href="#services" class="hover:text-white transition-colors inline-flex items-center gap-2">
+         <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+         </svg> ศูนย์บริการอิเล็กทรอนิกส์ </a></li>
+       <li><a href="#about" class="hover:text-white transition-colors inline-flex items-center gap-2">
+         <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+         </svg> เกี่ยวกับเรา </a></li>
+       <li><a href="#contact" class="hover:text-white transition-colors inline-flex items-center gap-2">
+         <svg class="w-4 h-4" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+         </svg> ติดต่อเรา </a></li>
+      </ul>
+     </div>
+     <div>
+      <h4 class="text-base sm:text-lg font-bold mb-4">ติดตามเรา</h4>
+      <div class="flex flex-wrap gap-3"><a id="facebook-link" href="https://www.facebook.com/profile.php?id=100063666448649" target="_blank" rel="noopener noreferrer" class="social-icon" title="Facebook">
+        <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+        </svg></a> <a id="phone-link" href="tel:0980483906" class="social-icon" title="โทรศัพท์">
+        <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 20 20"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
+        </svg></a> <a id="email-link" href="mailto:school@banhadsompan.ac.th" class="social-icon" title="อีเมล">
+        <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 20 20"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /> <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+        </svg></a> <a id="map-link" href="https://maps.app.goo.gl/STGfaGVP8ja8xBMG6" target="_blank" rel="noopener noreferrer" class="social-icon" title="แผนที่">
+        <svg class="w-6 h-6" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+        </svg></a>
+      </div>
+     </div>
+    </div>
+    <div class="border-t border-white border-opacity-20 pt-6 text-center text-gray-200 text-sm sm:text-base">
+     <p>© 2025 โรงเรียนบ้านหาดส้มแป้น. สงวนลิขสิทธิ์ | พัฒนาตามมาตรฐาน ITA</p>
+    </div>
+   </div>
+  </footer><!-- Admin Modal -->
+  <div id="admin-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 overflow-y-auto">
+   <div class="modal-backdrop absolute inset-0" id="modal-backdrop"></div>
+   <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl max-w-5xl w-full my-8 relative z-10 max-h-[90vh] overflow-y-auto"><!-- Login View -->
+    <div id="login-view" class="p-6 sm:p-10">
+     <div class="text-center mb-6 sm:mb-8">
+      <div class="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-4 sm:mb-6 rounded-2xl sm:rounded-3xl flex items-center justify-center" style="background: var(--primary-gradient);">
+       <svg class="w-10 h-10 sm:w-12 sm:h-12" fill="white" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+       </svg>
+      </div>
+      <h2 class="text-2xl sm:text-4xl font-black mb-2 sm:mb-3" style="color: var(--secondary-color);">เข้าสู่ระบบผู้ดูแล</h2>
+     </div>
+     <div class="mb-6 sm:mb-8"><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">รหัสผ่าน</label> <input type="password" id="admin-password" class="admin-input text-base sm:text-lg" placeholder="กรอกรหัสผ่าน">
+      <p id="login-error" class="text-red-600 text-sm sm:text-base mt-2 sm:mt-3 hidden font-semibold">❌ รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง</p>
+     </div>
+     <div class="flex flex-col sm:flex-row gap-3 sm:gap-4"><button id="login-cancel" class="flex-1 px-6 sm:px-8 py-3 sm:py-4 border-2 border-gray-300 rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg hover:bg-gray-50 transition-all duration-300" style="color: var(--text-color);"> ยกเลิก </button> <button id="login-submit" class="flex-1 btn-primary"> เข้าสู่ระบบ </button>
+     </div>
+    </div><!-- Edit View -->
+    <div id="edit-view" class="p-6 sm:p-10 hidden">
+     <div class="flex justify-between items-start sm:items-center mb-6 sm:mb-8 pb-4 border-b-2">
+      <div>
+       <h2 class="text-2xl sm:text-4xl font-black" style="color: var(--secondary-color);">แก้ไขข้อมูลเว็บไซต์</h2>
+       <p class="text-sm sm:text-lg mt-1" style="color: var(--text-color); opacity: 0.7;">จัดการเนื้อหา สี รูปภาพ และข้อมูลต่าง ๆ</p>
+      </div><button id="edit-close" class="w-10 h-10 sm:w-12 sm:h-12 rounded-full hover:bg-gray-100 flex items-center justify-center transition-all duration-300 flex-shrink-0">
+       <svg class="w-6 h-6 sm:w-7 sm:h-7" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+       </svg></button>
+     </div>
+     <div class="space-y-8 sm:space-y-10"><!-- Color Settings -->
+      <div class="border-b-2 pb-6 sm:pb-10">
+       <h3 class="text-2xl sm:text-3xl font-black mb-4 sm:mb-6" style="color: var(--primary-color);">🎨 การตั้งค่าสี</h3>
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">สีหลัก (Primary Color)</label>
+         <div class="flex gap-3 items-center"><input type="color" id="edit-primary-color" class="w-16 sm:w-20 h-10 sm:h-12 rounded-lg cursor-pointer border-2 border-gray-200"> <input type="text" id="edit-primary-color-text" class="admin-input text-base sm:text-lg flex-1" placeholder="#7f0101">
+         </div>
+        </div>
+        <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">สีรอง (Accent Color)</label>
+         <div class="flex gap-3 items-center"><input type="color" id="edit-accent-color" class="w-16 sm:w-20 h-10 sm:h-12 rounded-lg cursor-pointer border-2 border-gray-200"> <input type="text" id="edit-accent-color-text" class="admin-input text-base sm:text-lg flex-1" placeholder="#10b981">
+         </div>
+        </div>
+       </div>
+      </div><!-- Logo & School Info -->
+      <div class="border-b-2 pb-6 sm:pb-10">
+       <h3 class="text-2xl sm:text-3xl font-black mb-4 sm:mb-6" style="color: var(--primary-color);">🏫 โลโก้และข้อมูลโรงเรียน</h3>
+       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">โลโก้โรงเรียน</label>
+         <div class="mb-4"><img id="logo-preview" class="logo-preview hidden mb-4 border-2 border-gray-200 rounded-2xl p-2 max-h-32" alt="Logo Preview">
+         </div><input type="file" id="logo-upload" accept="image/*" class="hidden"> <label for="logo-upload" class="file-input-label inline-block text-center text-sm sm:text-base"> 📤 เลือกรูปโลโก้ </label> <button id="logo-remove" class="ml-2 sm:ml-3 px-4 sm:px-6 py-2 sm:py-3 bg-red-500 text-white rounded-lg sm:rounded-xl font-semibold hover:bg-red-600 transition-all duration-300 hidden text-sm sm:text-base"> 🗑️ ลบรูป </button>
+        </div>
+        <div class="space-y-3 sm:space-y-4">
+         <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">ชื่อโรงเรียน (ไทย)</label> <input type="text" id="edit-school-name" class="admin-input text-base sm:text-lg" placeholder="โรงเรียนบ้านหาดส้มแป้น">
+         </div>
+         <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">ชื่อโรงเรียน (อังกฤษ)</label> <input type="text" id="edit-school-name-en" class="admin-input text-base sm:text-lg" placeholder="Ban Had Som Paen School">
+         </div>
+        </div>
+       </div>
+      </div><!-- Hero Section -->
+      <div class="border-b-2 pb-6 sm:pb-10">
+       <h3 class="text-2xl sm:text-3xl font-black mb-4 sm:mb-6" style="color: var(--primary-color);">🎨 หน้าปก (Hero Section)</h3>
+       <div class="space-y-4 sm:space-y-6">
+        <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">รูปภาพพื้นหลังหน้าปก</label>
+         <div class="mb-4"><img id="hero-preview" class="image-preview hidden mb-4" alt="Hero Preview">
+         </div><input type="file" id="hero-upload" accept="image/*" class="hidden"> <label for="hero-upload" class="file-input-label text-sm sm:text-base"> 📤 เลือกรูปพื้นหลัง </label> <button id="hero-remove" class="ml-2 sm:ml-3 px-4 sm:px-6 py-2 sm:py-3 bg-red-500 text-white rounded-lg sm:rounded-xl font-semibold hover:bg-red-600 transition-all duration-300 hidden text-sm sm:text-base"> 🗑️ ลบรูป </button>
+        </div>
+        <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">หัวข้อหลัก</label> <input type="text" id="edit-hero-title" class="admin-input text-base sm:text-lg" placeholder="โรงเรียนบ้านหาดส้มแป้น">
+        </div>
+        <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">คำอธิบาย</label> <textarea id="edit-hero-subtitle" class="admin-textarea text-base sm:text-lg" placeholder="พัฒนาคุณภาพการศึกษา สร้างอนาคตที่ยั่งยืน"></textarea>
+        </div>
+       </div>
+      </div><!-- Services Section -->
+      <div class="border-b-2 pb-6 sm:pb-10">
+       <h3 class="text-2xl sm:text-3xl font-black mb-4 sm:mb-6" style="color: var(--primary-color);">💼 บริการ E-Services</h3><!-- Service 1 -->
+       <div class="mb-6 sm:mb-8 p-4 sm:p-8 rounded-2xl sm:rounded-3xl border-2" style="background: linear-gradient(to right, var(--primary-light), white); border-color: var(--primary-light);">
+        <h4 class="text-xl sm:text-2xl font-black mb-4 sm:mb-6" style="color: var(--secondary-color);">📚 บริการที่ 1</h4>
+        <div class="space-y-3 sm:space-y-5">
+         <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">รูปภาพบริการ</label>
+          <div class="mb-4"><img id="service1-preview" class="image-preview hidden mb-4" alt="Service 1 Preview">
+          </div><input type="file" id="service1-upload" accept="image/*" class="hidden"> <label for="service1-upload" class="file-input-label text-sm sm:text-base"> 📤 เลือกรูปบริการ </label> <button id="service1-remove" class="ml-2 sm:ml-3 px-4 sm:px-6 py-2 sm:py-3 bg-red-500 text-white rounded-lg sm:rounded-xl font-semibold hover:bg-red-600 transition-all duration-300 hidden text-sm sm:text-base"> 🗑️ ลบรูป </button>
+         </div>
+         <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">ชื่อบริการ</label> <input type="text" id="edit-service1-name" class="admin-input text-base sm:text-lg" placeholder="สำหรับครู">
+         </div>
+         <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">รายละเอียด</label> <textarea id="edit-service1-desc" class="admin-textarea text-base sm:text-lg" placeholder="รายละเอียดบริการ"></textarea>
+         </div>
+         <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">ลิงก์บริการ</label> <input type="url" id="edit-service1-link" class="admin-input text-base sm:text-lg" placeholder="https://">
+         </div>
+        </div>
+       </div><!-- Service 2 -->
+       <div class="mb-6 sm:mb-8 p-4 sm:p-8 bg-gradient-to-r from-yellow-50 to-white rounded-2xl sm:rounded-3xl border-2 border-yellow-100">
+        <h4 class="text-xl sm:text-2xl font-black mb-4 sm:mb-6" style="color: var(--secondary-color);">🎓 บริการที่ 2</h4>
+        <div class="space-y-3 sm:space-y-5">
+         <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">รูปภาพบริการ</label>
+          <div class="mb-4"><img id="service2-preview" class="image-preview hidden mb-4" alt="Service 2 Preview">
+          </div><input type="file" id="service2-upload" accept="image/*" class="hidden"> <label for="service2-upload" class="file-input-label text-sm sm:text-base"> 📤 เลือกรูปบริการ </label> <button id="service2-remove" class="ml-2 sm:ml-3 px-4 sm:px-6 py-2 sm:py-3 bg-red-500 text-white rounded-lg sm:rounded-xl font-semibold hover:bg-red-600 transition-all duration-300 hidden text-sm sm:text-base"> 🗑️ ลบรูป </button>
+         </div>
+         <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">ชื่อบริการ</label> <input type="text" id="edit-service2-name" class="admin-input text-base sm:text-lg" placeholder="สำหรับนักเรียน">
+         </div>
+         <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">รายละเอียด</label> <textarea id="edit-service2-desc" class="admin-textarea text-base sm:text-lg" placeholder="รายละเอียดบริการ"></textarea>
+         </div>
+         <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">ลิงก์บริการ</label> <input type="url" id="edit-service2-link" class="admin-input text-base sm:text-lg" placeholder="https://">
+         </div>
+        </div>
+       </div><!-- Service 3 -->
+       <div class="p-4 sm:p-8 bg-gradient-to-r from-green-50 to-white rounded-2xl sm:rounded-3xl border-2 border-green-100">
+        <h4 class="text-xl sm:text-2xl font-black mb-4 sm:mb-6" style="color: var(--secondary-color);">👥 บริการที่ 3</h4>
+        <div class="space-y-3 sm:space-y-5">
+         <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">รูปภาพบริการ</label>
+          <div class="mb-4"><img id="service3-preview" class="image-preview hidden mb-4" alt="Service 3 Preview">
+          </div><input type="file" id="service3-upload" accept="image/*" class="hidden"> <label for="service3-upload" class="file-input-label text-sm sm:text-base"> 📤 เลือกรูปบริการ </label> <button id="service3-remove" class="ml-2 sm:ml-3 px-4 sm:px-6 py-2 sm:py-3 bg-red-500 text-white rounded-lg sm:rounded-xl font-semibold hover:bg-red-600 transition-all duration-300 hidden text-sm sm:text-base"> 🗑️ ลบรูป </button>
+         </div>
+         <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">ชื่อบริการ</label> <input type="text" id="edit-service3-name" class="admin-input text-base sm:text-lg" placeholder="บริการทั่วไป">
+         </div>
+         <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">รายละเอียด</label> <textarea id="edit-service3-desc" class="admin-textarea text-base sm:text-lg" placeholder="รายละเอียดบริการ"></textarea>
+         </div>
+         <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">ลิงก์บริการ</label> <input type="url" id="edit-service3-link" class="admin-input text-base sm:text-lg" placeholder="https://">
+         </div>
+        </div>
+       </div>
+      </div><!-- About Section -->
+      <div class="border-b-2 pb-6 sm:pb-10">
+       <h3 class="text-2xl sm:text-3xl font-black mb-4 sm:mb-6" style="color: var(--primary-color);">ℹ️ เกี่ยวกับโรงเรียน</h3>
+       <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">เนื้อหาเกี่ยวกับโรงเรียน</label> <textarea id="edit-about-content" class="admin-textarea text-base sm:text-lg" style="min-height: 200px;" placeholder="เนื้อหาเกี่ยวกับโรงเรียน..."></textarea>
+       </div>
+      </div><!-- Contact Section -->
+      <div class="border-b-2 pb-6 sm:pb-10">
+       <h3 class="text-2xl sm:text-3xl font-black mb-4 sm:mb-6" style="color: var(--primary-color);">📞 ข้อมูลติดต่อ</h3>
+       <div class="space-y-3 sm:space-y-5">
+        <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">เบอร์โทรศัพท์</label> <input type="tel" id="edit-phone" class="admin-input text-base sm:text-lg" placeholder="098-048-3906">
+        </div>
+        <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">อีเมล</label> <input type="email" id="edit-email" class="admin-input text-base sm:text-lg" placeholder="school@banhadsompan.ac.th">
+        </div>
+        <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">ที่อยู่</label> <textarea id="edit-address" class="admin-textarea text-base sm:text-lg" placeholder="ที่อยู่โรงเรียน"></textarea>
+        </div>
+        <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">Facebook URL</label> <input type="url" id="edit-facebook-url" class="admin-input text-base sm:text-lg" placeholder="https://www.facebook.com/...">
+        </div>
+        <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">Google Maps Embed URL</label> <input type="url" id="edit-map-embed-url" class="admin-input text-base sm:text-lg" placeholder="https://www.google.com/maps/embed?pb=...">
+         <p class="text-xs sm:text-sm mt-2" style="color: var(--text-color); opacity: 0.6;">💡 <strong>วิธีใส่:</strong> เปิด Google Maps → คลิก "แชร์" → เลือก "ฝังแผนที่" → คัดลอก URL จาก src="..." ในโค้ด iframe</p>
+        </div>
+        <div><label class="block font-bold mb-2 sm:mb-3 text-base sm:text-lg" style="color: var(--text-color);">Google Maps Link URL</label> <input type="url" id="edit-map-url" class="admin-input text-base sm:text-lg" placeholder="https://maps.app.goo.gl/...">
+         <p class="text-xs sm:text-sm mt-2" style="color: var(--text-color); opacity: 0.6;">💡 <strong>วิธีใส่:</strong> ใส่ลิงก์ Google Maps แบบ Short URL สำหรับปุ่มในฟุตเตอร์</p>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-6 sm:mt-10 pt-6 sm:pt-8 border-t-2"><button id="save-cancel" class="flex-1 px-6 sm:px-8 py-3 sm:py-4 border-2 border-gray-300 rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg hover:bg-gray-50 transition-all duration-300" style="color: var(--text-color);"> ยกเลิก </button> <button id="save-changes" class="flex-1 btn-primary"> <span id="save-text">💾 บันทึกการเปลี่ยนแปลง</span> <span id="save-loading" class="hidden flex items-center justify-center gap-2"> <span class="loading-spinner"></span> กำลังบันทึก... </span> </button>
+     </div>
+    </div>
+   </div>
+  </div><!-- Success Toast -->
+  <div id="success-toast" class="fixed top-4 sm:top-6 right-4 sm:right-6 z-50 bg-gradient-to-r from-green-500 to-green-600 text-white px-6 sm:px-8 py-4 sm:py-5 rounded-xl sm:rounded-2xl shadow-2xl hidden items-center gap-3 sm:gap-4">
+   <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+   </svg><span class="font-bold text-base sm:text-lg">✅ บันทึกข้อมูลเรียบร้อยแล้ว!</span>
+  </div>
+  <script>
+    const ADMIN_PASSWORD = 'Bhsp2025';
+    const DATA_KEY = 'site_config';
+    
+    let currentSiteData = null;
+    let isLoading = false;
+
+    const defaultConfig = {
+      primary_color: '#7f0101',
+      primary_dark: '#5a0000',
+      primary_light: '#ffe5e5',
+      accent_color: '#10b981',
+      secondary_color: '#1e293b',
+      text_color: '#1f2937',
+      bg_color: '#f8fafc',
+      school_name: 'โรงเรียนบ้านหาดส้มแป้น',
+      school_name_en: 'Ban Had Som Paen School',
+      hero_title: 'โรงเรียนบ้านหาดส้มแป้น',
+      hero_subtitle: 'พัฒนาคุณภาพการศึกษา สร้างอนาคตที่ยั่งยืน',
+      service1_title: 'สำหรับครู',
+      service1_desc: 'งานเอกสาร งานวิชาการ ระบบสารสนเทศ และบริการสนับสนุนการเรียนการสอน',
+      service2_title: 'สำหรับนักเรียน',
+      service2_desc: 'ข้อมูลนักเรียน ผลการเรียน ตารางเรียน กิจกรรม และบริการเรียนรู้ออนไลน์',
+      service3_title: 'บริการทั่วไป',
+      service3_desc: 'บริการประชาชน ผู้ปกครอง ข้อมูลโรงเรียน และช่องทางติดต่อสื่อสาร',
+      about_content: 'โรงเรียนของเราได้จัดตั้งศูนย์บริการอิเล็กทรอนิกส์ เพื่อพัฒนาการให้บริการข้อมูลและงานบริการต่าง ๆ แก่ครู นักเรียน ผู้ปกครอง และประชาชนทั่วไป ด้วยระบบดิจิทัลที่ทันสมัย เรามุ่งมั่นพัฒนาคุณภาพการศึกษา ด้วยเทคโนโลยีที่ทันสมัย ระบบที่โปร่งใส และตรวจสอบได้ สอดคล้องกับมาตรฐานการประเมินคุณธรรมและความโปร่งใส (ITA) ในยุคดิจิทัล',
+      font_family: 'Sarabun',
+      font_size: 16
+    };
+
+    // Data SDK Handler
+    const dataHandler = {
+      onDataChanged(data) {
+        if (data && data.length > 0) {
+          currentSiteData = data[0];
+          applySavedData();
+        }
+      }
+    };
+
+    // Initialize Data SDK
+    async function initDataSdk() {
+      if (window.dataSdk) {
+        const result = await window.dataSdk.init(dataHandler);
+        if (!result.isOk) {
+          console.error('Failed to initialize Data SDK');
+        }
+      }
+    }
+
+    initDataSdk();
+
+    // Apply colors
+    function applyColors() {
+      if (!currentSiteData) return;
+      
+      const primary = currentSiteData.primary_color || '#7f0101';
+      const accent = currentSiteData.accent_color || '#10b981';
+      
+      const primaryDark = adjustColor(primary, -20);
+      const primaryLight = adjustColor(primary, 80);
+      
+      document.documentElement.style.setProperty('--primary-color', primary);
+      document.documentElement.style.setProperty('--primary-dark', primaryDark);
+      document.documentElement.style.setProperty('--primary-light', primaryLight);
+      document.documentElement.style.setProperty('--primary-gradient', `linear-gradient(135deg, ${primary} 0%, ${primaryDark} 100%)`);
+      document.documentElement.style.setProperty('--primary-shadow', hexToRgba(primary, 0.3));
+      document.documentElement.style.setProperty('--accent-color', accent);
+    }
+
+    function adjustColor(hex, percent) {
+      const num = parseInt(hex.replace('#', ''), 16);
+      const r = Math.min(255, Math.max(0, (num >> 16) + percent));
+      const g = Math.min(255, Math.max(0, ((num >> 8) & 0x00FF) + percent));
+      const b = Math.min(255, Math.max(0, (num & 0x0000FF) + percent));
+      return '#' + ((r << 16) | (g << 8) | b).toString(16).padStart(6, '0');
+    }
+
+    function hexToRgba(hex, alpha) {
+      const num = parseInt(hex.replace('#', ''), 16);
+      const r = (num >> 16) & 255;
+      const g = (num >> 8) & 255;
+      const b = num & 255;
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    }
+
+    // Apply saved data
+    function applySavedData() {
+      if (!currentSiteData) return;
+      
+      applyColors();
+      
+      document.getElementById('nav-school-name').textContent = currentSiteData.school_name || defaultConfig.school_name;
+      document.getElementById('nav-school-name-en').textContent = currentSiteData.school_name_en || defaultConfig.school_name_en;
+      document.getElementById('hero-title').textContent = currentSiteData.hero_title || defaultConfig.hero_title;
+      document.getElementById('hero-subtitle').textContent = currentSiteData.hero_subtitle || defaultConfig.hero_subtitle;
+      document.getElementById('service1-title').textContent = currentSiteData.service1_name || defaultConfig.service1_title;
+      document.getElementById('service1-desc').textContent = currentSiteData.service1_desc || defaultConfig.service1_desc;
+      document.getElementById('service1-link').href = currentSiteData.service1_link || 'https://www.banhadsompan.ac.th/datashow_11181';
+      document.getElementById('service2-title').textContent = currentSiteData.service2_name || defaultConfig.service2_title;
+      document.getElementById('service2-desc').textContent = currentSiteData.service2_desc || defaultConfig.service2_desc;
+      document.getElementById('service2-link').href = currentSiteData.service2_link || 'https://www.banhadsompan.ac.th/datashow_11182';
+      document.getElementById('service3-title').textContent = currentSiteData.service3_name || defaultConfig.service3_title;
+      document.getElementById('service3-desc').textContent = currentSiteData.service3_desc || defaultConfig.service3_desc;
+      document.getElementById('service3-link').href = currentSiteData.service3_link || 'https://www.banhadsompan.ac.th/datashow_11183';
+      document.getElementById('about-content').textContent = currentSiteData.about_content || defaultConfig.about_content;
+      document.getElementById('top-phone').textContent = currentSiteData.phone || '098-048-3906';
+      document.getElementById('top-email').textContent = currentSiteData.email || 'school@banhadsompan.ac.th';
+      document.getElementById('contact-phone').textContent = currentSiteData.phone || '098-048-3906';
+      document.getElementById('contact-email').textContent = currentSiteData.email || 'school@banhadsompan.ac.th';
+      document.getElementById('contact-address').textContent = currentSiteData.address || '333 หมู่ที่ 11 ตำบลท่าข้าม อำเภอท่าแซะ จังหวัดชุมพร 86140';
+      document.getElementById('footer-school-name').textContent = currentSiteData.school_name || defaultConfig.school_name;
+      
+      if (currentSiteData.facebook_url) {
+        document.getElementById('facebook-link').href = currentSiteData.facebook_url;
+      }
+      if (currentSiteData.email) {
+        document.getElementById('email-link').href = 'mailto:' + currentSiteData.email;
+      }
+      if (currentSiteData.phone) {
+        document.getElementById('phone-link').href = 'tel:' + currentSiteData.phone.replace(/[-\s]/g, '');
+      }
+      if (currentSiteData.map_url) {
+        document.getElementById('map-link').href = currentSiteData.map_url;
+      }
+      if (currentSiteData.map_embed_url) {
+        document.getElementById('google-map').src = currentSiteData.map_embed_url;
+      }
+
+      // Apply images
+      if (currentSiteData.logo_image) {
+        document.getElementById('logo-img').src = currentSiteData.logo_image;
+        document.getElementById('logo-img').classList.remove('hidden');
+        document.getElementById('logo-default').classList.add('hidden');
+        
+        document.getElementById('footer-logo-img').src = currentSiteData.logo_image;
+        document.getElementById('footer-logo-img').classList.remove('hidden');
+        document.getElementById('footer-logo-default').classList.add('hidden');
+      }
+      
+      if (currentSiteData.hero_image) {
+        document.getElementById('hero-bg').style.backgroundImage = `url(${currentSiteData.hero_image})`;
+        document.getElementById('hero-default-bg').style.display = 'none';
+      }
+
+      if (currentSiteData.service1_image) {
+        document.getElementById('service1-img').src = currentSiteData.service1_image;
+        document.getElementById('service1-img').classList.remove('hidden');
+        document.getElementById('service1-default').classList.add('hidden');
+      }
+
+      if (currentSiteData.service2_image) {
+        document.getElementById('service2-img').src = currentSiteData.service2_image;
+        document.getElementById('service2-img').classList.remove('hidden');
+        document.getElementById('service2-default').classList.add('hidden');
+      }
+
+      if (currentSiteData.service3_image) {
+        document.getElementById('service3-img').src = currentSiteData.service3_image;
+        document.getElementById('service3-img').classList.remove('hidden');
+        document.getElementById('service3-default').classList.add('hidden');
+      }
+    }
+
+    // Mobile menu toggle
+    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    });
+
+    // Close mobile menu when clicking on links
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('mobile-menu').classList.add('hidden');
+      });
+    });
+
+    // Scroll reveal animation
+    function revealOnScroll() {
+      const reveals = document.querySelectorAll('.scroll-reveal');
+      reveals.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+        if (rect.top <= windowHeight - 100) {
+          el.classList.add('revealed');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+
+    // Image upload handlers
+    let tempImages = {
+      logo: '',
+      hero: '',
+      service1: '',
+      service2: '',
+      service3: ''
+    };
+
+    function handleImageUpload(inputId, previewId, removeId, imageKey) {
+      const input = document.getElementById(inputId);
+      const preview = document.getElementById(previewId);
+      const removeBtn = document.getElementById(removeId);
+
+      input.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const dataUrl = e.target.result;
+            preview.src = dataUrl;
+            preview.classList.remove('hidden');
+            removeBtn.classList.remove('hidden');
+            tempImages[imageKey] = dataUrl;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      removeBtn.addEventListener('click', () => {
+        preview.src = '';
+        preview.classList.add('hidden');
+        removeBtn.classList.add('hidden');
+        input.value = '';
+        tempImages[imageKey] = '';
+      });
+    }
+
+    handleImageUpload('logo-upload', 'logo-preview', 'logo-remove', 'logo');
+    handleImageUpload('hero-upload', 'hero-preview', 'hero-remove', 'hero');
+    handleImageUpload('service1-upload', 'service1-preview', 'service1-remove', 'service1');
+    handleImageUpload('service2-upload', 'service2-preview', 'service2-remove', 'service2');
+    handleImageUpload('service3-upload', 'service3-preview', 'service3-remove', 'service3');
+
+    // Color picker sync
+    function syncColorPickers() {
+      const primaryColor = document.getElementById('edit-primary-color');
+      const primaryColorText = document.getElementById('edit-primary-color-text');
+      const accentColor = document.getElementById('edit-accent-color');
+      const accentColorText = document.getElementById('edit-accent-color-text');
+
+      primaryColor.addEventListener('input', (e) => {
+        primaryColorText.value = e.target.value;
+      });
+      primaryColorText.addEventListener('input', (e) => {
+        if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
+          primaryColor.value = e.target.value;
+        }
+      });
+
+      accentColor.addEventListener('input', (e) => {
+        accentColorText.value = e.target.value;
+      });
+      accentColorText.addEventListener('input', (e) => {
+        if (/^#[0-9A-F]{6}$/i.test(e.target.value)) {
+          accentColor.value = e.target.value;
+        }
+      });
+    }
+
+    syncColorPickers();
+
+    // Modal functions
+    const adminModal = document.getElementById('admin-modal');
+    const loginView = document.getElementById('login-view');
+    const editView = document.getElementById('edit-view');
+    
+    document.getElementById('admin-btn').addEventListener('click', () => {
+      adminModal.classList.remove('hidden');
+      adminModal.classList.add('flex');
+      loginView.classList.remove('hidden');
+      editView.classList.add('hidden');
+      document.getElementById('admin-password').value = '';
+      document.getElementById('login-error').classList.add('hidden');
+    });
+
+    document.getElementById('modal-backdrop').addEventListener('click', () => {
+      if (!isLoading) {
+        adminModal.classList.add('hidden');
+        adminModal.classList.remove('flex');
+      }
+    });
+
+    document.getElementById('login-cancel').addEventListener('click', () => {
+      adminModal.classList.add('hidden');
+      adminModal.classList.remove('flex');
+    });
+
+    document.getElementById('login-submit').addEventListener('click', () => {
+      const password = document.getElementById('admin-password').value;
+      if (password === ADMIN_PASSWORD) {
+        loginView.classList.add('hidden');
+        editView.classList.remove('hidden');
+        loadEditForm();
+      } else {
+        document.getElementById('login-error').classList.remove('hidden');
+      }
+    });
+
+    document.getElementById('admin-password').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        document.getElementById('login-submit').click();
+      }
+    });
+
+    document.getElementById('edit-close').addEventListener('click', () => {
+      if (!isLoading) {
+        adminModal.classList.add('hidden');
+        adminModal.classList.remove('flex');
+      }
+    });
+
+    document.getElementById('save-cancel').addEventListener('click', () => {
+      if (!isLoading) {
+        adminModal.classList.add('hidden');
+        adminModal.classList.remove('flex');
+      }
+    });
+
+    function loadEditForm() {
+      const data = currentSiteData || {
+        primary_color: '#7f0101',
+        accent_color: '#10b981',
+        school_name: 'โรงเรียนบ้านหาดส้มแป้น',
+        school_name_en: 'Banhadsompan School',
+        hero_title: 'โรงเรียนบ้านหาดส้มแป้น',
+        hero_subtitle: 'พัฒนาคุณภาพการศึกษา สร้างอนาคตที่ยั่งยืน',
+        service1_name: 'E-Services สำหรับครู',
+        service1_desc: 'งานเอกสาร งานวิชาการ ระบบสารสนเทศ และบริการสนับสนุนการเรียนการสอน',
+        service1_link: 'https://www.banhadsompan.ac.th/datashow_11181',
+        service2_name: 'E-Services สำหรับนักเรียน',
+        service2_desc: 'ข้อมูลนักเรียน ผลการเรียน ตารางเรียน กิจกรรม และบริการเรียนรู้ออนไลน์',
+        service2_link: 'https://www.banhadsompan.ac.th/datashow_11182',
+        service3_name: 'E-Services บริการทั่วไป',
+        service3_desc: 'บริการประชาชน ผู้ปกครอง ข้อมูลโรงเรียน และช่องทางติดต่อสื่อสาร',
+        service3_link: 'https://www.banhadsompan.ac.th/datashow_11183',
+        about_content: 'โรงเรียนของเราได้จัดตั้งศูนย์บริการอิเล็กทรอนิกส์ เพื่อพัฒนาการให้บริการข้อมูลและงานบริการต่าง ๆ แก่ครู นักเรียน ผู้ปกครอง และประชาชนทั่วไป ด้วยระบบดิจิทัลที่ทันสมัย เรามุ่งมั่นพัฒนาคุณภาพการศึกษา ด้วยเทคโนโลยีที่ทันสมัย ระบบที่โปร่งใส และตรวจสอบได้ สอดคล้องกับมาตรฐานการประเมินคุณธรรมและความโปร่งใส (ITA) ในยุคดิจิทัล',
+        phone: '080-647-4863',
+        email: 'admin@banhadsompan.ac.th',
+        address: '333 หมู่ที่ 11 ตำบลท่าข้าม อำเภอท่าแซะ จังหวัดชุมพร 86140',
+        facebook_url: 'https://www.facebook.com/profile.php?id=100063666448649',
+        map_embed_url: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3933.8895519834807!2d99.17961207590679!3d9.631836590456678!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x305289e89eb5d1d3%3A0x40223bc2c382d60!2z4LmC4Lij4LiH4LmA4Lij4Li14Lii4LiZ4Lia4LmJ4Liy4LiZ4Lir4Liy4LiU4Liq4LmJ4Lih4LmB4Lib4LmJ4LiZ!5e0!3m2!1sth!2sth!4v1705234567890!5m2!1sth!2sth',
+        map_url: 'https://maps.app.goo.gl/STGfaGVP8ja8xBMG6',
+        logo_image: '',
+        hero_image: '',
+        service1_image: '',
+        service2_image: '',
+        service3_image: ''
+      };
+
+      document.getElementById('edit-primary-color').value = data.primary_color;
+      document.getElementById('edit-primary-color-text').value = data.primary_color;
+      document.getElementById('edit-accent-color').value = data.accent_color;
+      document.getElementById('edit-accent-color-text').value = data.accent_color;
+      document.getElementById('edit-school-name').value = data.school_name;
+      document.getElementById('edit-school-name-en').value = data.school_name_en;
+      document.getElementById('edit-hero-title').value = data.hero_title;
+      document.getElementById('edit-hero-subtitle').value = data.hero_subtitle;
+      document.getElementById('edit-service1-name').value = data.service1_name;
+      document.getElementById('edit-service1-desc').value = data.service1_desc;
+      document.getElementById('edit-service1-link').value = data.service1_link;
+      document.getElementById('edit-service2-name').value = data.service2_name;
+      document.getElementById('edit-service2-desc').value = data.service2_desc;
+      document.getElementById('edit-service2-link').value = data.service2_link;
+      document.getElementById('edit-service3-name').value = data.service3_name;
+      document.getElementById('edit-service3-desc').value = data.service3_desc;
+      document.getElementById('edit-service3-link').value = data.service3_link;
+      document.getElementById('edit-about-content').value = data.about_content;
+      document.getElementById('edit-phone').value = data.phone;
+      document.getElementById('edit-email').value = data.email;
+      document.getElementById('edit-address').value = data.address;
+      document.getElementById('edit-facebook-url').value = data.facebook_url;
+      document.getElementById('edit-map-embed-url').value = data.map_embed_url;
+      document.getElementById('edit-map-url').value = data.map_url;
+
+      // Load image previews
+      tempImages = {
+        logo: data.logo_image || '',
+        hero: data.hero_image || '',
+        service1: data.service1_image || '',
+        service2: data.service2_image || '',
+        service3: data.service3_image || ''
+      };
+
+      if (data.logo_image) {
+        document.getElementById('logo-preview').src = data.logo_image;
+        document.getElementById('logo-preview').classList.remove('hidden');
+        document.getElementById('logo-remove').classList.remove('hidden');
+      }
+      if (data.hero_image) {
+        document.getElementById('hero-preview').src = data.hero_image;
+        document.getElementById('hero-preview').classList.remove('hidden');
+        document.getElementById('hero-remove').classList.remove('hidden');
+      }
+      if (data.service1_image) {
+        document.getElementById('service1-preview').src = data.service1_image;
+        document.getElementById('service1-preview').classList.remove('hidden');
+        document.getElementById('service1-remove').classList.remove('hidden');
+      }
+      if (data.service2_image) {
+        document.getElementById('service2-preview').src = data.service2_image;
+        document.getElementById('service2-preview').classList.remove('hidden');
+        document.getElementById('service2-remove').classList.remove('hidden');
+      }
+      if (data.service3_image) {
+        document.getElementById('service3-preview').src = data.service3_image;
+        document.getElementById('service3-preview').classList.remove('hidden');
+        document.getElementById('service3-remove').classList.remove('hidden');
+      }
+    }
+
+    document.getElementById('save-changes').addEventListener('click', async () => {
+      if (isLoading) return;
+      
+      isLoading = true;
+      const saveBtn = document.getElementById('save-changes');
+      saveBtn.disabled = true;
+      document.getElementById('save-text').classList.add('hidden');
+      document.getElementById('save-loading').classList.remove('hidden');
+
+      const newData = {
+        data_key: DATA_KEY,
+        primary_color: document.getElementById('edit-primary-color').value,
+        accent_color: document.getElementById('edit-accent-color').value,
+        school_name: document.getElementById('edit-school-name').value,
+        school_name_en: document.getElementById('edit-school-name-en').value,
+        hero_title: document.getElementById('edit-hero-title').value,
+        hero_subtitle: document.getElementById('edit-hero-subtitle').value,
+        service1_name: document.getElementById('edit-service1-name').value,
+        service1_desc: document.getElementById('edit-service1-desc').value,
+        service1_link: document.getElementById('edit-service1-link').value,
+        service2_name: document.getElementById('edit-service2-name').value,
+        service2_desc: document.getElementById('edit-service2-desc').value,
+        service2_link: document.getElementById('edit-service2-link').value,
+        service3_name: document.getElementById('edit-service3-name').value,
+        service3_desc: document.getElementById('edit-service3-desc').value,
+        service3_link: document.getElementById('edit-service3-link').value,
+        about_content: document.getElementById('edit-about-content').value,
+        phone: document.getElementById('edit-phone').value,
+        email: document.getElementById('edit-email').value,
+        address: document.getElementById('edit-address').value,
+        facebook_url: document.getElementById('edit-facebook-url').value,
+        map_embed_url: document.getElementById('edit-map-embed-url').value,
+        map_url: document.getElementById('edit-map-url').value,
+        logo_image: tempImages.logo,
+        hero_image: tempImages.hero,
+        service1_image: tempImages.service1,
+        service2_image: tempImages.service2,
+        service3_image: tempImages.service3
+      };
+
+      let result;
+      if (currentSiteData && currentSiteData.__backendId) {
+        newData.__backendId = currentSiteData.__backendId;
+        result = await window.dataSdk.update(newData);
+      } else {
+        result = await window.dataSdk.create(newData);
+      }
+
+      isLoading = false;
+      saveBtn.disabled = false;
+      document.getElementById('save-text').classList.remove('hidden');
+      document.getElementById('save-loading').classList.add('hidden');
+
+      if (result.isOk) {
+        adminModal.classList.add('hidden');
+        adminModal.classList.remove('flex');
+
+        const toast = document.getElementById('success-toast');
+        toast.classList.remove('hidden');
+        toast.classList.add('flex');
+        setTimeout(() => {
+          toast.classList.add('hidden');
+          toast.classList.remove('flex');
+        }, 3000);
+      } else {
+        const errorToast = document.createElement('div');
+        errorToast.className = 'fixed top-4 sm:top-6 right-4 sm:right-6 z-50 bg-gradient-to-r from-red-500 to-red-600 text-white px-6 sm:px-8 py-4 sm:py-5 rounded-xl sm:rounded-2xl shadow-2xl flex items-center gap-3 sm:gap-4';
+        errorToast.innerHTML = `
+          <svg class="w-6 h-6 sm:w-8 sm:h-8" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"/>
+          </svg>
+          <span class="font-bold text-base sm:text-lg">❌ เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง</span>
+        `;
+        document.body.appendChild(errorToast);
+        setTimeout(() => {
+          errorToast.remove();
+        }, 3000);
+      }
+    });
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          
+          document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+          if (this.classList.contains('nav-link')) {
+            this.classList.add('active');
+          }
+        }
+      });
+    });
+
+    // Element SDK Integration
+    async function onConfigChange(config) {
+      const customFont = config.font_family || defaultConfig.font_family;
+      const baseFontStack = 'sans-serif';
+      document.body.style.fontFamily = `${customFont}, ${baseFontStack}`;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ accent_color: value });
+            }
+          },
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              config.secondary_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ secondary_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.bg_color || defaultConfig.bg_color,
+            set: (value) => {
+              config.bg_color = value;
+              if (window.elementSdk) window.elementSdk.setConfig({ bg_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            config.font_family = value;
+            if (window.elementSdk) window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => {
+            config.font_size = value;
+            if (window.elementSdk) window.elementSdk.setConfig({ font_size: value });
+          }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      const data = currentSiteData || {};
+      return new Map([
+        ['school_name', data.school_name || config.school_name || defaultConfig.school_name],
+        ['school_name_en', data.school_name_en || config.school_name_en || defaultConfig.school_name_en],
+        ['hero_title', data.hero_title || config.hero_title || defaultConfig.hero_title],
+        ['hero_subtitle', data.hero_subtitle || config.hero_subtitle || defaultConfig.hero_subtitle],
+        ['service1_title', data.service1_name || config.service1_title || defaultConfig.service1_title],
+        ['service1_desc', data.service1_desc || config.service1_desc || defaultConfig.service1_desc],
+        ['service2_title', data.service2_name || config.service2_title || defaultConfig.service2_title],
+        ['service2_desc', data.service2_desc || config.service2_desc || defaultConfig.service2_desc],
+        ['service3_title', data.service3_name || config.service3_title || defaultConfig.service3_title],
+        ['service3_desc', data.service3_desc || config.service3_desc || defaultConfig.service3_desc],
+        ['about_content', data.about_content || config.about_content || defaultConfig.about_content],
+        ['contact_phone', data.phone || '080-647-4863'],
+        ['contact_email', data.email || 'admin@banhadsompan.ac.th'],
+        ['contact_address', data.address || '333 หมู่ที่ 11 ตำบลท่าข้าม อำเภอท่าแซะ จังหวัดชุมพร 86140']
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+<script defer src="./app.js"></script>
+</body>
+</html>
